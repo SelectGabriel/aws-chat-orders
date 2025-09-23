@@ -1,0 +1,16 @@
+# Maven / build
+target/
+!target/*.jar
+
+# IDE / VCS
+.idea/
+.project
+.classpath
+.settings/
+*.iml
+.git/
+.gitignore
+
+# OS junk
+.DS_Store
+Thumbs.db
