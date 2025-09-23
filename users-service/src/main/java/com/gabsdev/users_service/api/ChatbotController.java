@@ -1,7 +1,7 @@
 package com.gabsdev.users_service.api;
 
 import com.gabsdev.users_service.messaging.SqsGateway;
-import com.gabsdev.users_service.messaging.dto.OrderQueryReply;
+import com.gabsdev.contracts.dto.OrderQueryReply;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

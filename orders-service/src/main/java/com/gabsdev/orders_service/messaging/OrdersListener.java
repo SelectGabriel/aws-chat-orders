@@ -1,7 +1,7 @@
 package com.gabsdev.orders_service.messaging;
 
-import com.gabsdev.orders_service.messaging.dto.OrderQueryReply;
-import com.gabsdev.orders_service.messaging.dto.OrderQueryRequest;
+import com.gabsdev.contracts.dto.OrderQueryReply;
+import com.gabsdev.contracts.dto.OrderQueryRequest;
 import com.gabsdev.orders_service.model.Order;
 import com.gabsdev.orders_service.repository.OrderRepository;
 import io.awspring.cloud.sqs.annotation.SqsListener;

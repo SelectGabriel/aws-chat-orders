@@ -1,7 +1,7 @@
 package com.gabsdev.users_service.messaging;
 
-import com.gabsdev.users_service.messaging.dto.OrderQueryReply;
-import com.gabsdev.users_service.messaging.dto.OrderQueryRequest;
+import com.gabsdev.contracts.dto.OrderQueryReply;
+import com.gabsdev.contracts.dto.OrderQueryRequest;
 import io.awspring.cloud.sqs.annotation.SqsListener;
 import io.awspring.cloud.sqs.operations.SqsTemplate;
 import lombok.RequiredArgsConstructor;
@@ -11,10 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.Duration;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -24,7 +23,8 @@ public class SqsGateway {
 
     private final SqsTemplate sqsTemplate;
 
-    private final ConcurrentHashMap<String, CompletableFuture<OrderQueryReply>> correlationMap;
+    // ⬇️ trocado de ConcurrentHashMap para Map (injeção por interface)
+    private final Map<String, CompletableFuture<OrderQueryReply>> correlationMap;
 
     @Value("${aws.sqs.request-queue}")
     private String requestQueue;
@@ -63,10 +63,10 @@ public class SqsGateway {
         var future = correlationMap.get(reply.correlationId());
         if (future != null) {
             future.complete(reply);
-            log.info("Resposta correlacionada corr={} ({} pedidos)", reply.correlationId(), reply.orders().size());
+            log.info("Resposta correlacionada corr={} ({} pedidos)",
+                    reply.correlationId(), reply.orders().size());
         } else {
             log.warn("Resposta órfã recebida corr={}", reply.correlationId());
         }
     }
 }
-
